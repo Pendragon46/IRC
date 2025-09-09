@@ -53,3 +53,33 @@ Establish a connection to a socket
 ```c
 int connect(int sockfd, const struct sockaddr *addr, socklen_t addrlen);
 ```
+
+
+### Blocking I/O Model
+
+When a communication function(accept, recv, send, ...) it block the process until it's work is done 
+
+![[Pasted image 20250909095144.png]]
+
+### I/O multiplexing model
+
+We block in a call to `select`, `poll`,... waiting for the datagram socket to be readable. When the function returns that the socket is readable, we then call the appropriate function to proceed data.
+
+![[Pasted image 20250909095823.png]]
+
+- poll
+```c
+int poll (struct pollfd *fdarray, unsigned long nfds, int timeout);
+```
+First argument in poll system call
+
+```c
+struct pollfd {
+  int     fd;       /* descriptor to check */
+  short   events;   /* events of interest on fd */
+  short   revents;  /* events that occurred on fd */
+};
+```
+The conditions to be tested are specified by the `events` member, and the function returns the status for that descriptor in the corresponding `revents` member
+![[Pasted image 20250909100839.png]]
+
